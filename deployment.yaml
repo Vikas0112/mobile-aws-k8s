@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: mobile-aws-k8s
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: mobile-aws-k8s
+
+  template:
+    metadata:
+      labels:
+        app: mobile-aws-k8s
+
+    spec:
+      containers:
+      - name: mobile-aws-k8s
+
+        image: YOUR_DOCKER_USERNAME/mobile-aws-k8s:v1
+
+        ports:
+        - containerPort: 8080
