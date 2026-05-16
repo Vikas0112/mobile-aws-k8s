@@ -27,18 +27,18 @@ pipeline {
             }
         }
 
-        stage('GHCR Login') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'ghcr-creds',
-                    usernameVariable: 'GITHUB_USER',
-                    passwordVariable: 'GITHUB_TOKEN'
-                )]) {
+stage('GHCR Login') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'aws-k8s-mobile',
+            usernameVariable: 'GITHUB_USER',
+            passwordVariable: 'GITHUB_TOKEN'
+        )]) {
 
-                    sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USER --password-stdin'
-                }
-            }
+            sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USER --password-stdin'
         }
+    }
+}
 
         stage('Push Image') {
             steps {
