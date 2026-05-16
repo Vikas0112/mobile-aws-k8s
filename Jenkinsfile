@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "vikas0112/mobile-aws-k8s:v1"
+        IMAGE_NAME = "ghcr.io/vikas0112/mobile-aws-k8s:v1"
     }
 
     stages {
@@ -27,20 +27,20 @@ pipeline {
             }
         }
 
-        stage('Docker Login') {
+        stage('GHCR Login') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
+                    credentialsId: 'ghcr-creds',
+                    usernameVariable: 'GITHUB_USER',
+                    passwordVariable: 'GITHUB_TOKEN'
                 )]) {
 
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USER --password-stdin'
                 }
             }
         }
 
-        stage('Docker Push') {
+        stage('Push Image') {
             steps {
                 sh 'docker push $IMAGE_NAME'
             }
