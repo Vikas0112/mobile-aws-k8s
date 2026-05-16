@@ -10,7 +10,8 @@ pipeline {
 
         stage('Git Clone') {
             steps {
-                git 'https://github.com/Vikas0112/mobile-aws-k8s.git'
+                git branch: 'main',
+                url: 'https://github.com/Vikas0112/mobile-aws-k8s.git'
             }
         }
 
